@@ -1,0 +1,6 @@
+{
+  "name": "Calculadora Python para Iniciantes",
+  "description": "Tutorial interativo e código organizado de calculadora em Python com as 4 operações básicas, explicação passo a passo e simulador.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
