@@ -20,9 +20,11 @@ import { ComponentExplainer } from './components/ComponentExplainer';
 import { StepFlowDiagram } from './components/StepFlowDiagram';
 import { QuizSection } from './components/QuizSection';
 import { HowToRunGuide } from './components/HowToRunGuide';
+import { ReadmeViewer } from './components/ReadmeViewer';
+import { RAW_README_MARKDOWN } from './data/readmeContent';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<'simulador' | 'teclado' | 'codigo' | 'explicacao' | 'quiz' | 'executar'>('teclado');
+  const [activeTab, setActiveTab] = useState<'simulador' | 'teclado' | 'codigo' | 'explicacao' | 'quiz' | 'executar' | 'readme'>('teclado');
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 selection:bg-blue-600 selection:text-white flex flex-col font-sans">
@@ -114,6 +116,21 @@ export default function App() {
             >
               <HelpCircle className="w-3.5 h-3.5" />
               <span>Quiz</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('readme')}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                activeTab === 'readme'
+                  ? 'bg-blue-600 text-white shadow-md shadow-blue-900/40'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900'
+              }`}
+            >
+              <Github className="w-3.5 h-3.5" />
+              <span>README</span>
+              <span className="hidden sm:inline text-[10px] bg-blue-950 text-blue-300 border border-blue-800 px-1 rounded">
+                Alura
+              </span>
             </button>
 
             <button
@@ -280,6 +297,12 @@ export default function App() {
         {activeTab === 'quiz' && (
           <div className="space-y-6">
             <QuizSection />
+          </div>
+        )}
+
+        {activeTab === 'readme' && (
+          <div className="space-y-6">
+            <ReadmeViewer content={RAW_README_MARKDOWN} />
           </div>
         )}
 
