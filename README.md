@@ -35,6 +35,7 @@ O objetivo principal é transformar conceitos teóricos (como funções, tratame
 - ➖ **Subtração** (`a - b`)
 - ✖️ **Multiplicação** (`a * b`)
 - ➗ **Divisão Segura** (`a / b`), com tratamento preventivo contra divisão por zero (`ZeroDivisionError`)
+- 📊 **Porcentagem** (`(a * b) / 100`)
 - 🔢 Suporte para números decimais via `float()`
 - 💬 Mensagens claras e amigáveis ao usuário via *f-strings*
 

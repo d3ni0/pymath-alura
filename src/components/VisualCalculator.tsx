@@ -95,6 +95,9 @@ export const VisualCalculator: React.FC = () => {
         }
         result = current / inputValue;
         funcName = `dividir(${current}, ${inputValue})`;
+      } else if (operation === '%') {
+        result = (current * inputValue) / 100;
+        funcName = `porcentagem(${current}, ${inputValue})`;
       }
 
       setPrevValue(result);
@@ -143,6 +146,9 @@ export const VisualCalculator: React.FC = () => {
       }
       result = current / inputValue;
       funcName = `dividir(${current}, ${inputValue})`;
+    } else if (operation === '%') {
+      result = (current * inputValue) / 100;
+      funcName = `porcentagem(${current}, ${inputValue})`;
     }
 
     setDisplay(String(result));
@@ -198,9 +204,19 @@ export const VisualCalculator: React.FC = () => {
             <div className="grid grid-cols-4 gap-2">
               <button
                 onClick={clearAll}
-                className="col-span-2 p-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-rose-300 font-semibold text-xs border border-slate-700 transition-colors"
+                className="p-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-rose-300 font-semibold text-xs border border-slate-700 transition-colors"
               >
-                Limpar (C)
+                C
+              </button>
+              <button
+                onClick={() => handleOperator('%')}
+                className={`p-3 rounded-xl font-mono text-sm font-bold border transition-colors ${
+                  operation === '%'
+                    ? 'bg-amber-500 text-slate-950 border-amber-400'
+                    : 'bg-slate-800 hover:bg-blue-600/30 text-amber-400 border-slate-700'
+                }`}
+              >
+                %
               </button>
               <button
                 onClick={() => handleOperator('/')}

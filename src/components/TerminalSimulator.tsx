@@ -20,7 +20,8 @@ export const TerminalSimulator: React.FC = () => {
     { id: '5', type: 'system', text: '2 - Subtração (-)' },
     { id: '6', type: 'system', text: '3 - Multiplicação (*)' },
     { id: '7', type: 'system', text: '4 - Divisão (/)' },
-    { id: '8', type: 'system', text: '==============================' },
+    { id: '8', type: 'system', text: '5 - Porcentagem (%)' },
+    { id: '9', type: 'system', text: '==============================' },
   ]);
 
   const resetTerminal = () => {
@@ -36,7 +37,8 @@ export const TerminalSimulator: React.FC = () => {
       { id: (Date.now() + 4).toString(), type: 'system', text: '2 - Subtração (-)' },
       { id: (Date.now() + 5).toString(), type: 'system', text: '3 - Multiplicação (*)' },
       { id: (Date.now() + 6).toString(), type: 'system', text: '4 - Divisão (/)' },
-      { id: (Date.now() + 7).toString(), type: 'system', text: '==============================' },
+      { id: (Date.now() + 7).toString(), type: 'system', text: '5 - Porcentagem (%)' },
+      { id: (Date.now() + 8).toString(), type: 'system', text: '==============================' },
     ]);
   };
 
@@ -47,13 +49,14 @@ export const TerminalSimulator: React.FC = () => {
       '2': 'Subtração (-)',
       '3': 'Multiplicação (*)',
       '4': 'Divisão (/)',
+      '5': 'Porcentagem (%)',
     };
     setLogs((prev) => [
       ...prev,
       {
         id: Math.random().toString(),
         type: 'input',
-        text: `opcao = input("Escolha a operação desejada (1/2/3/4): ") -> "${op}" (${opNames[op] || 'Inválido'})`,
+        text: `opcao = input("Escolha a operação desejada (1/2/3/4/5): ") -> "${op}" (${opNames[op] || 'Inválido'})`,
       },
     ]);
     setStep('num1');
@@ -106,6 +109,10 @@ export const TerminalSimulator: React.FC = () => {
       } else {
         result = n1 / n2;
       }
+    } else if (selectedOp === '5') {
+      funcName = `porcentagem(${n1}, ${n2})`;
+      symbol = '%';
+      result = (n1 * n2) / 100;
     }
 
     setLogs((prev) => [
@@ -125,6 +132,8 @@ export const TerminalSimulator: React.FC = () => {
         type: isError ? 'error' : 'output',
         text: isError
           ? `>>> ${result}`
+          : selectedOp === '5'
+          ? `>>> Resultado: ${n2}% de ${n1} = ${typeof result === 'number' && Number.isInteger(result) ? result : result}`
           : `>>> Resultado: ${n1} ${symbol} ${n2} = ${typeof result === 'number' && Number.isInteger(result) ? result : result}`,
       },
     ]);
@@ -143,6 +152,7 @@ export const TerminalSimulator: React.FC = () => {
         '2': 'Subtração (-)',
         '3': 'Multiplicação (*)',
         '4': 'Divisão (/)',
+        '5': 'Porcentagem (%)',
       };
 
       const n1 = parseFloat(val1);
@@ -173,6 +183,10 @@ export const TerminalSimulator: React.FC = () => {
         } else {
           result = n1 / n2;
         }
+      } else if (op === '5') {
+        funcName = `porcentagem(${n1}, ${n2})`;
+        symbol = '%';
+        result = (n1 * n2) / 100;
       }
 
       setLogs((prev) => [
@@ -180,7 +194,7 @@ export const TerminalSimulator: React.FC = () => {
         {
           id: Math.random().toString(),
           type: 'input',
-          text: `opcao = input("Escolha a operação desejada (1/2/3/4): ") -> "${op}" (${opNames[op]})`,
+          text: `opcao = input("Escolha a operação desejada (1/2/3/4/5): ") -> "${op}" (${opNames[op]})`,
         },
         {
           id: Math.random().toString(),
@@ -202,6 +216,8 @@ export const TerminalSimulator: React.FC = () => {
           type: isError ? 'error' : 'output',
           text: isError
             ? `>>> ${result}`
+            : op === '5'
+            ? `>>> Resultado: ${n2}% de ${n1} = ${result}`
             : `>>> Resultado: ${n1} ${symbol} ${n2} = ${result}`,
         },
       ]);
@@ -284,7 +300,7 @@ export const TerminalSimulator: React.FC = () => {
             {step === 'menu' && (
               <div className="text-amber-400 animate-pulse text-xs flex items-center gap-1.5 pt-2">
                 <span className="w-2 h-4 bg-amber-400 inline-block" />
-                Aguardando escolha da operação (1, 2, 3 ou 4)...
+                Aguardando escolha da operação (1, 2, 3, 4 ou 5)...
               </div>
             )}
             {step === 'num1' && (
@@ -312,6 +328,12 @@ export const TerminalSimulator: React.FC = () => {
                 className="text-xs bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white px-2.5 py-1 rounded transition-colors"
               >
                 ➕ Soma: 25 + 7
+              </button>
+              <button
+                onClick={() => runPreset('5', '200', '15')}
+                className="text-xs bg-amber-950/60 hover:bg-amber-900/80 text-amber-300 border border-amber-800/50 px-2.5 py-1 rounded transition-colors"
+              >
+                % Porcentagem: 15% de 200
               </button>
               <button
                 onClick={() => runPreset('4', '10', '0')}
@@ -385,6 +407,14 @@ export const TerminalSimulator: React.FC = () => {
                   >
                     <div className="font-bold text-white text-sm group-hover:text-blue-300">4 - Divisão</div>
                     <div className="text-xs text-slate-400 font-mono">def dividir(a, b) [/]</div>
+                  </button>
+
+                  <button
+                    onClick={() => handleChooseOp('5')}
+                    className="p-3 text-left rounded-xl bg-slate-800 hover:bg-blue-600/30 border border-slate-700 hover:border-blue-500 transition-all group col-span-2"
+                  >
+                    <div className="font-bold text-white text-sm group-hover:text-blue-300">5 - Porcentagem</div>
+                    <div className="text-xs text-slate-400 font-mono">def porcentagem(a, b) [%]</div>
                   </button>
                 </div>
               </div>

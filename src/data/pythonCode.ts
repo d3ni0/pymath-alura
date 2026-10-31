@@ -9,7 +9,7 @@ export const CODE_VERSIONS: CodeVersion[] = [
     filename: 'calculadora_funcoes.py',
     code: `# ==========================================
 # CALCULADORA SIMPLES EM PYTHON
-# Operações: Adição, Subtração, Multiplicação e Divisão
+# Operações: Adição, Subtração, Multiplicação, Divisão e Porcentagem
 # ==========================================
 
 # 1. Definindo as funções matemáticas
@@ -31,6 +31,10 @@ def dividir(a, b):
         return "Erro: Não é possível dividir por zero!"
     return a / b
 
+def porcentagem(a, b):
+    """Retorna b por cento de a: (a * b) / 100."""
+    return (a * b) / 100
+
 # 2. Exibindo o menu para o usuário
 print("=" * 30)
 print("     CALCULADORA EM PYTHON")
@@ -39,32 +43,36 @@ print("1 - Adição (+)")
 print("2 - Subtração (-)")
 print("3 - Multiplicação (*)")
 print("4 - Divisão (/)")
+print("5 - Porcentagem (%)")
 print("=" * 30)
 
 # 3. Lendo a opção do usuário
-opcao = input("Escolha a operação desejada (1/2/3/4): ")
+opcao = input("Escolha a operação desejada (1/2/3/4/5): ")
 
 # 4. Validando se a opção é válida
-if opcao in ['1', '2', '3', '4']:
+if opcao in ['1', '2', '3', '4', '5']:
     # Lendo os dois números com conversão para float (decimal)
-    num1 = float(input("Digite o primeiro número: "))
-    num2 = float(input("Digite o segundo número: "))
+    num1 = float(input("Digite o primeiro número (base): "))
+    num2 = float(input("Digite o segundo número (ou taxa %): "))
 
     # 5. Tomada de decisão com if/elif
     if opcao == '1':
         resultado = somar(num1, num2)
-        print(f"\n>>> Resultado: {num1} + {num2} = {resultado}")
+        print(f"\\n>>> Resultado: {num1} + {num2} = {resultado}")
     elif opcao == '2':
         resultado = subtrair(num1, num2)
-        print(f"\n>>> Resultado: {num1} - {num2} = {resultado}")
+        print(f"\\n>>> Resultado: {num1} - {num2} = {resultado}")
     elif opcao == '3':
         resultado = multiplicar(num1, num2)
-        print(f"\n>>> Resultado: {num1} * {num2} = {resultado}")
+        print(f"\\n>>> Resultado: {num1} * {num2} = {resultado}")
     elif opcao == '4':
         resultado = dividir(num1, num2)
-        print(f"\n>>> Resultado: {num1} / {num2} = {resultado}")
+        print(f"\\n>>> Resultado: {num1} / {num2} = {resultado}")
+    elif opcao == '5':
+        resultado = porcentagem(num1, num2)
+        print(f"\\n>>> Resultado: {num2}% de {num1} = {resultado}")
 else:
-    print("\nOpção inválida! Por favor, execute novamente e escolha entre 1 e 4.")
+    print("\\nOpção inválida! Por favor, execute novamente e escolha entre 1 e 5.")
 `
   },
   {
@@ -79,7 +87,7 @@ print("--- CALCULADORA SIMPLES ---")
 
 # Recebe os números digitados pelo usuário
 num1 = float(input("Digite o primeiro número: "))
-operador = input("Digite a operação (+, -, *, /): ")
+operador = input("Digite a operação (+, -, *, /, %): ")
 num2 = float(input("Digite o segundo número: "))
 
 # Verifica qual operador foi escolhido e calcula
@@ -98,6 +106,9 @@ elif operador == '/':
     else:
         resultado = num1 / num2
         print(f"Resultado: {num1} / {num2} = {resultado}")
+elif operador == '%':
+    resultado = (num1 * num2) / 100
+    print(f"Resultado: {num2}% de {num1} = {resultado}")
 else:
     print("Operação inválida!")
 `
@@ -116,18 +127,19 @@ def calcular(n1, op, n2):
     if op == '*': return n1 * n2
     if op == '/':
         return "Erro: Divisão por zero!" if n2 == 0 else n1 / n2
+    if op == '%': return (n1 * n2) / 100
     return None
 
 while True:
     print("\\n=== CALCULADORA ===")
-    print("Operações: +, -, *, /  (ou digite 'sair' para encerrar)")
+    print("Operações: +, -, *, /, %  (ou digite 'sair' para encerrar)")
     
     escolha = input("Digite a operação: ").strip().lower()
     if escolha == 'sair':
         print("Encerrando a calculadora. Até mais!")
         break
 
-    if escolha not in ['+', '-', '*', '/']:
+    if escolha not in ['+', '-', '*', '/', '%']:
         print("Operação não reconhecida. Tente novamente.")
         continue
 
