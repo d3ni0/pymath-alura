@@ -1,8 +1,61 @@
+# ==========================================
+# Dependências e Builds (Node / React / Vite)
+# ==========================================
 node_modules/
-build/
 dist/
+dist-ssr/
+build/
 coverage/
-.DS_Store
+*.local
+
+# Logs
+logs/
 *.log
-.env*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ==========================================
+# Variáveis de Ambiente e Segredos
+# ==========================================
+.env
+.env.*
 !.env.example
+
+# ==========================================
+# Python (Bytecode, Ambientes Virtuais, Testes)
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Ambientes virtuais
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Testes e cobertura Python
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# ==========================================
+# Editores e Sistema Operacional
+# ==========================================
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
